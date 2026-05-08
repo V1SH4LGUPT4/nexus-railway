@@ -1,13 +1,7 @@
-FROM rust:latest
+FROM ubuntu:22.04
 
-RUN apt update && apt install -y git pkg-config libssl-dev
+RUN apt update && apt install -y curl
 
-WORKDIR /app
+RUN curl https://cli.nexus.xyz/ | sh
 
-RUN git clone https://github.com/nexus-xyz/nexus-zkvm.git
-
-WORKDIR /app/nexus-zkvm
-
-RUN cargo build --release
-
-CMD ["cargo", "run", "--release"]
+CMD ["/root/.nexus/bin/nexus-network", "start", "--headless", "--max-difficulty", "small_medium"]
